@@ -41,6 +41,25 @@ app.get("/api/reviews",(req,res)=>{
     res.json(data);
    })
 })
+app.post("/api/reviews",(req,res)=>{
+    db.query("INSERT INTO reviews(movie_id,review)VALUES(?,?)",[req.body.movie_id,req.body.review],(err,data)=>{
+     if(err){
+         console.log(err);
+         return res.status(500).json({msg:'oh no!',err:err})
+     }
+     res.json(data);
+    })
+ })
+app.put("/api/reviews/:id",(req,res)=>{
+    db.query("UPDATE reviews SET review = ? WHERE id = ?",[req.body.review,req.params.id],(err,data)=>{
+     if(err){
+         console.log(err);
+         return res.status(500).json({msg:'oh no!',err:err})
+     }
+     res.json(data);
+    })
+ })
+
 app.post("/api/movies",(req,res)=>{
    db.query("INSERT INTO movies(movie_name)VALUES(?)",[req.body.movie_name],(err,data)=>{
     if(err){
